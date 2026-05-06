@@ -27,14 +27,14 @@ const getPaymentController = async (req, res) => {
 const updatePremiumAccessController = async (req, res) => {
     try {
         const email = req.body.email;
-        const user = await UserModel.findOne({ email: email });
+        const user = await UserModel.findOne({ email: email.trim() });
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
         user.premiumAccess = true;
         //  find and update the user with the new premium access status
         await UserModel.findOneAndUpdate(
-            { email: email },
+            { email: email.trim() },
             { $set: { isPremium: true } },
             { new: true }
         );

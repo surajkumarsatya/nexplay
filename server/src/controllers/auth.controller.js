@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import util from "util";
 import UserModel from "../models/user.model.js";
 import emailSender from "../utils/dynamicEmailSender.js";
+import bcrypt from "bcrypt";
 
 const promisify = util.promisify;
 const promisedJWTsign = promisify(jwt.sign);
@@ -48,7 +49,6 @@ async function signupHandler(req, res) {
         email: newUser.email,
       },
     });
-
   } catch (err) {
     return res.status(500).json({
       status: "failure",
@@ -84,7 +84,8 @@ async function loginHandler(req, res) {
 
     const token = await promisedJWTsign(
       { id: user._id },
-      process.env.JWT_SECRET_KEY
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "1d" },
     );
 
     res.cookie("jwt", token, {
@@ -97,7 +98,6 @@ async function loginHandler(req, res) {
       status: "success",
       message: "Login successful",
     });
-
   } catch (err) {
     return res.status(500).json({
       status: "failure",
@@ -111,7 +111,16 @@ async function forgotPasswordController(req, res) {
   try {
     const { email } = req.body;
 
-    const user = await UserModel.findOne({ email: email.trim() });
+    if (!email) {
+      return res.status(400).json({
+        status: "failure",
+        message: "Email is required",
+      });
+    }
+
+    const user = await UserModel.findOne({
+      email: email.trim(),
+    });
 
     if (!user) {
       return res.status(404).json({
@@ -122,7 +131,7 @@ async function forgotPasswordController(req, res) {
 
     const otp = String(Math.floor(100000 + Math.random() * 900000));
 
-    user.otp = otp;
+    user.otp = await bcrypt.hash(otp, 10);
     user.otpExpiry = Date.now() + 10 * 60 * 1000;
 
     await user.save({ validateBeforeSave: false });
@@ -137,7 +146,6 @@ async function forgotPasswordController(req, res) {
       message: "OTP sent successfully",
       resetURL: `http://localhost:4000/api/auth/resetPassword/${user._id}`,
     });
-
   } catch (err) {
     return res.status(500).json({
       status: "failure",
@@ -181,7 +189,9 @@ async function resetPasswordHandler(req, res) {
       });
     }
 
-    if (user.otp !== String(otp)) {
+    const isValidOtp = await bcrypt.compare(otp, user.otp);
+
+    if (!isValidOtp) {
       return res.status(401).json({
         status: "failure",
         message: "Invalid OTP",
@@ -200,7 +210,6 @@ async function resetPasswordHandler(req, res) {
       status: "success",
       message: "Password reset successful",
     });
-
   } catch (err) {
     return res.status(500).json({
       status: "failure",
@@ -221,14 +230,10 @@ const protectRouteMiddleware = async (req, res, next) => {
       });
     }
 
-    const decoded = await promisedJWTverify(
-      token,
-      process.env.JWT_SECRET_KEY
-    );
+    const decoded = await promisedJWTverify(token, process.env.JWT_SECRET_KEY);
 
     req.userId = decoded.id;
     next();
-
   } catch {
     return res.status(401).json({
       status: "failure",
