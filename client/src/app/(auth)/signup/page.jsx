@@ -1,4 +1,7 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner"
 import {
   Card,
   CardAction,
@@ -11,8 +14,53 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { useState } from "react";
+import { api, ENDPOINT } from "@/lib/api";
+import { useRouter } from "next/navigation";
+import { LucideLoader2 } from "lucide-react";
 
 export default function SignupPage() {
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+
+    const onsubmit = async () => {
+      try {
+        if(!name || !email || !password || !confirmPassword){
+          toast("Please fill all the fields")
+          return
+        }
+        
+        setLoading(true)
+        const res = await api.post(ENDPOINT.signup, {
+          name: name,
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword
+        })
+        if (res.data.status === "success") {
+              // dispatch(userLoggedInDetails(res.data.user));
+              router.push("/");
+            } else {
+                console.log("message", res.data.message);
+            }
+      if (res.data) {
+        toast("Account Created!");
+      }
+
+      } catch (error) {
+        console.log("err: ", err.response.data.message);
+            toast("Something went wrong");
+        } finally {
+            setLoading(false);
+        }
+      
+    }
+
   return (
     <div className="h-screen w-full flex items-center justify-center bg-zinc-800 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-zinc-900 via-zinc-950 to-black p-4">
       
@@ -38,6 +86,8 @@ export default function SignupPage() {
                 <Input
                   id="name"
                   type="text"
+                  value={name}
+                  onChange = {(e) => (setName(e.target.value))}
                   placeholder="John Doe"
                   required
                   className="bg-zinc-950 border-zinc-800 text-white focus-visible:ring-zinc-700 placeholder:text-zinc-600"
@@ -51,6 +101,8 @@ export default function SignupPage() {
                 <Input
                   id="email"
                   type="email"
+                  value={email}
+                  onChange = {(e) => (setEmail(e.target.value))}
                   placeholder="name@example.com"
                   required
                   className="bg-zinc-950 border-zinc-800 text-white focus-visible:ring-zinc-700 placeholder:text-zinc-600"
@@ -64,6 +116,8 @@ export default function SignupPage() {
                 <Input
                   id="password"
                   type="password"
+                  value={password}
+                  onChange = {(e) => (setPassword(e.target.value))}
                   required
                   className="bg-zinc-950 border-zinc-800 text-white focus-visible:ring-zinc-700"
                 />
@@ -76,6 +130,8 @@ export default function SignupPage() {
                 <Input
                   id="confirmPassword"
                   type="password"
+                  value={confirmPassword}
+                  onChange = {(e) => (setConfirmPassword(e.target.value))}
                   required
                   className="bg-zinc-950 border-zinc-800 text-white focus-visible:ring-zinc-700"
                 />
@@ -89,9 +145,13 @@ export default function SignupPage() {
           
           <Button 
             type="submit" 
-            className="w-full bg-white text-black hover:bg-zinc-200 transition-all font-semibold"
+            onClick={onsubmit}
+            className="w-full bg-white text-black hover:bg-zinc-200 transition-all font-semibold hover: cursor-pointer"
           >
             Sign Up
+            {loading && (
+              <LucideLoader2 className="animate-spin ml-2 w-4 h-4" />
+            )}
           </Button>
 
           {/* Divider (same as login) */}
