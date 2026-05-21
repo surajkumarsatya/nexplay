@@ -11,31 +11,31 @@ export const ENDPOINT = {
   resetPassword: "/auth/resetPassword",
 
   //discover
-  discoverNowPlaying: "/discover/now-playing",
-  discoverTrending: "/discover/trending",
-  discoverTopRated: "/discover/top-rated",
-  discoverUpcoming: "/discover/upcoming",
-  discoverPopular: "/discover/popular",
+  discoverNowPlaying: "/api/discover/now-playing",
+  discoverTrending: "/api/discover/trending",
+  discoverTopRated: "/api/discover/top-rated",
+  discoverUpcoming: "/api/discover/upcoming",
+  discoverPopular: "/api/discover/popular",
 
   // movies
-  fetchActionMovies: `/movies/action`,
-  fetchComedyMovies: `/movies/comedy`,
-  fetchHorrorMovies: `/movies/horror`,
-  fetchRomanceMovies: `/movies/romance`,
-  fetchAnimeMovies: `/movies/anime`,
+  fetchActionMovies: `/api/movies/action`,
+  fetchComedyMovies: `/api/movies/comedy`,
+  fetchHorrorMovies: `/api/movies/horror`,
+  fetchRomanceMovies: `/api/movies/romance`,
+  fetchAnimeMovies: `/api/movies/anime`,
 
   //tv shows
-  fetchActionTvShows: `/tv/action`,
-  fetchComedyTvShows: `/tv/comedy`,
-  fetchCrimeTvShows: `/tv/crime`,
-  fetchDramaTvShows: `/tv/drama`,
-  fetchMysteryTvShows: `/tv/mystery`,
+  fetchActionTvShows: `/api/tv/action`,
+  fetchComedyTvShows: `/api/tv/comedy`,
+  fetchCrimeTvShows: `/api/tv/crime`,
+  fetchDramaTvShows: `/api/tv/drama`,
+  fetchMysteryTvShows: `/api/tv/mystery`,
 
   //eextra data
   // getMovieDetails: (id) => `/movie/details?id=${id}`,
-  getMovieDetails: (id) => `/movies/${id}`,
+  getMovieDetails: (id) => `/api/movies/${id}`,
   // getTvShowsDetails: (id) => `/tv/details?id=${id}`,
-  getTvShowsDetails: (id) => `/tv/${id}`,
+  getTvShowsDetails: (id) => `/api/tv/${id}`,
 
   //user
   user: "/user",
@@ -47,9 +47,9 @@ export const ENDPOINT = {
   updatePremium: "/payment/update-premium-access",
 
   // streaming urls
-  fetchAllStreamingVideos: `/video`,
-  fetchStreamingVideo: (id) => `/video?id=${id}`,
-  fetchVideoThumbnail: (id) => `/video/thumbnail?videoId=${id}`,
+  fetchAllStreamingVideos: `/api/video`,
+  fetchStreamingVideo: (id) => `/api/video?id=${id}`,
+  fetchVideoThumbnail: (id) => `/api/video/thumbnail?videoId=${id}`,
 };
 
 export const media = (path) => `https://image.tmdb.org/t/p/original` + path;
