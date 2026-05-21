@@ -1,0 +1,11 @@
+<svg width="220" height="260" viewBox="0 0 220 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- N -->
+  <path d="M55 200V55H72L148 165V55H165V200H148L72 90V200H55Z" fill="white"></path>
+
+  <!-- NEXPLAY -->
+  <text x="110" y="235" text-anchor="middle" fill="white" font-family="Helvetica, Arial, sans-serif" font-size="20" letter-spacing="8">
+    NEXPLAY
+  </text>
+
+</svg>

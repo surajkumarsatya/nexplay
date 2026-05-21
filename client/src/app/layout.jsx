@@ -1,8 +1,8 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Toaster } from "@/components/ui/sonner"
+import Header from "@/components/section/Header";
+import Footer from "@/components/section/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -20,9 +20,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={roboto.variable}>
       <body className="min-h-screen flex flex-col">
         <Header />
-        <main className="grow">
-          {children} 
-        </main>
+        <main className="grow bg-black/90 mt-20">{children}</main>
         <Toaster />
         <Footer />
       </body>

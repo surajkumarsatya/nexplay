@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { X, ExternalLink, ChevronRight } from "lucide-react";
+import { X, ExternalLink, ChevronRight, Menu } from "lucide-react";
 
 import {
   Sheet,
@@ -15,19 +15,22 @@ export function ProfileSheet() {
     <Sheet>
       <SheetTrigger>
         <div className="cursor-pointer">
-          <Image
+          {/* <Image
             src="/images/logo.webp"
             alt="profile"
             width={36}
             height={36}
             className="rounded-full border border-zinc-700 hover:border-white transition"
-          />
+          /> */}
+          <div className="w-10 h-10 bg-white/5 rounded-sm flex items-center justify-center transition cursor-pointer">
+            <Menu className="w-5 h-5" />
+          </div>
         </div>
       </SheetTrigger>
 
       <SheetContent
         side="right"
-        className="w-[85%] max-w-85! border-l border-zinc-800 bg-zinc-950 text-white p-0 [&>button]:hidden"
+        className="w-[85%] max-w-85! border-l border-zinc-800 bg-[#191922] text-white p-0 [&>button]:hidden"
       >
         <div className="flex flex-col h-full">
           {/* Close Button */}
@@ -52,8 +55,8 @@ export function ProfileSheet() {
 
               <p className="mt-4 text-lg font-semibold">Guest</p>
 
-              <Button className="mt-4 bg-pink-600 hover:bg-pink-500 text-white rounded-full px-6">
-                Login
+              <Button className="h-10 px-4 rounded-sm border-2 border-white bg-black hover:bg-white hover:text-black text-white font-semibold transition">
+                <Link href="/login">LOGIN</Link>
               </Button>
             </div>
           </div>
@@ -61,14 +64,14 @@ export function ProfileSheet() {
           {/* Menu */}
           <div className="flex-1 px-4 pb-6 text-sm">
             <div className="border-b border-zinc-800 pb-2 mb-2">
-              <MenuItem label="Subscribe Now" href="#" arrow />
+              <MenuItem label="Subscribe Now" href="/subscription" arrow />
             </div>
 
             <MenuItem label="Home" href="/" external />
             <MenuItem label="Movies" href="/movies" external />
             <MenuItem label="TV Shows" href="/tv" external />
             <MenuItem label="Watchlist" href="/watchlist" external />
-            <MenuItem label="Jio+" href="/jio" external />
+            {/* <MenuItem label="Play+" href="/play-plus" external /> */}
 
             <div className="border-t border-zinc-800 mt-4 pt-3">
               <MenuItem label="Help and Legal" href="/help" arrow />
