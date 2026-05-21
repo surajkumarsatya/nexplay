@@ -45,10 +45,10 @@ async function CategoriesContent({ fetcher, mediaType }) {
     <ul className="flex gap-4 w-full overflow-scroll scrollbar-hide">
       {data?.map((post) => {
         return (
-          <div className="gird">
+          <div className="gird" key={post.id}>
             <Link
               href={getWatchUrl(post.id, mediaType, post?.poster_path)}
-              key={post.id}
+              
             >
               <Image
                 src={media(post?.poster_path)}
