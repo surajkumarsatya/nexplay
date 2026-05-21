@@ -1,5 +1,5 @@
 import{ tmdbApi, TMDB_ENDPOINT } from "../services/tmdb.services.js";
-import {fetchNowPlaying, fetchTrending, fetchTopRated, fetchUpcoming} from "../services/discover.service.js"
+import {fetchNowPlaying, fetchTrending, fetchTopRated, fetchUpcoming, fetchPopular} from "../services/discover.service.js"
 
 const getNowPlaying = async (req, res) => {
     try {
@@ -65,9 +65,26 @@ const getUpcoming = async (req, res) => {
     }
 };
 
+const getPopular = async (req, res) => {
+    try {
+        const data = await fetchPopular();
+
+        res.status(200).json({
+            status: "success",
+            response: data
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: err.message,
+            status: "failure",
+        });
+    }
+};
+
 export {
     getNowPlaying,
     getTrending,
     getTopRated,
     getUpcoming,
+    getPopular
 };

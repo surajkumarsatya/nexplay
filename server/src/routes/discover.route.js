@@ -1,5 +1,5 @@
 import express from "express"
-import {getNowPlaying, getTrending, getUpcoming, getTopRated} from "../controllers/discover.controller.js"
+import {getNowPlaying, getTrending, getUpcoming, getTopRated, getPopular} from "../controllers/discover.controller.js"
 
 const discoverRoute = express.Router()
 
@@ -8,5 +8,6 @@ discoverRoute
     .get("/trending", getTrending)
     .get("/upcoming", getUpcoming)
     .get("/top-rated", getTopRated)
+    .get("/popular", getPopular);
 
 export default discoverRoute

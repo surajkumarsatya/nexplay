@@ -16,6 +16,6 @@ tvshowsRoute
   .get("/crime", getCrimeTvShows)
   .get("/drama", getDramaTvShows)
   .get("/mystery", getMysteryTvShows)
-  .get("/details/:id", getTvShowDetailsById);
+  .get("/:id", getTvShowDetailsById);
 
 export default tvshowsRoute;

@@ -1,19 +1,18 @@
 console.log("TMDB KEY:", process.env.TMDB_KEY ? "Loaded" : "Missing");
 
-
 const headers = {
   accept: "application/json",
   // api key
   Authorization: `Bearer ${process.env.TMDB_KEY}`,
 };
 const imageBASEURL = "https://image.tmdb.org/t/p/original/";
-const tmdbBASEURL = "https://api.themoviedb.org/3/";
+const tmdbBASEURL = "https://api.themoviedb.org/3";
 // ahmarae backend yah data leke aayega
 const TMDB_ENDPOINT = {
   //discover
   fetchNowPlaying: "/movie/now_playing",
   fetchTrending: `/trending/all/week`,
-  fetchPopular: `/trending/all/week`,
+  fetchPopular: `/movie/popular`,
   fetchUpcoming: `/movie/upcoming?include_video=true`,
   fetchTopRated: `/movie/top_rated?include_video=true`,
 
