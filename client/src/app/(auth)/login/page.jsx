@@ -18,19 +18,25 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { api, ENDPOINT } from "@/lib/api";
-// import { useDispatch } from "react-redux";
-// import { userLoggedInDetails } from "@/store/...";
+import { useDispatch, useSelector } from "react-redux";
+import { userLoggedInDetails } from "@/redux/userSlice";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user)
 
-  // if(userData.isLoggedIn){
-  //   return router.push("/")
-  // }
+  useEffect(() => {
+  if (userData.isLoggedIn) {
+    router.push("/");
+  }
+}, [userData.isLoggedIn]);
+
+  
 
   const onSubmit = async () => {
     try {
@@ -46,12 +52,13 @@ export default function LoginPage() {
       })
 
       if (res.data.status === "success") {
-        // dispatch(userLoggedInDetails(res.data.user));
+        console.log(res.data)
+        dispatch(userLoggedInDetails(res?.data?.user))
         router.push("/");
       }
 
     } catch (error) {
-      console.log("err", error.response.data.message)
+      console.log("error", error.response?.data?.message)
       toast("Invalid Credentials")
     } finally{
       setLoading(false)

@@ -1,5 +1,6 @@
 // import ShareButton from "@/components/atom/ShareButton";
 // import WishlistButton from "@/components/atom/WishListButton";
+import WishlistButton from "@/components/atom/WishlistButton";
 import { buttonVariants } from "@/components/ui/button";
 import { api, ENDPOINT } from "@/lib/api";
 import { FilmIcon } from "lucide-react";
@@ -89,9 +90,14 @@ const page = async ({ searchParams }) => {
                 ☰
               </button>
 
-              <button className="w-10 h-10 rounded-full bg-blue-950 flex items-center justify-center text-xl">
-                ♥
-              </button>
+              <WishlistButton 
+                wishlist={{
+                name: details.title,
+                id: details.id,
+                poster_path: details.poster_path,
+                mediaType: "tv",
+              }}
+              />
 
               <button className="w-10 h-10 rounded-full bg-blue-950 flex items-center justify-center text-xl">
                 🔖

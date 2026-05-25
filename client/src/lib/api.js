@@ -2,13 +2,14 @@ import axios from "axios";
 
 export const ENDPOINT = {
   // auth
-  login: "/auth/login",
-  signup: "/auth/signup",
+  login: "/api/auth/login",
+  signup: "/api/auth/signup",
   // logout , user pending
-  user: "/user",
-  logout: "/auth/logout",
-  forgetpassword: "/auth/forgetpassword",
-  resetPassword: "/auth/resetPassword",
+  // user: "/api/user",
+  logout: "/api/auth/logout",
+  forgotpassword: "/api/auth/forgotPassword",
+  // resetPassword: "/api/auth/resetPassword",
+  resetPassword: (id) => `/api/auth/resetPassword/${id}`,
 
   //discover
   discoverNowPlaying: "/api/discover/now-playing",
@@ -38,13 +39,13 @@ export const ENDPOINT = {
   getTvShowsDetails: (id) => `/api/tv/${id}`,
 
   //user
-  user: "/user",
-  addToWishlist: "/user/wishlist",
-  getWishlist: "/user/wishlist",
+  user: "/api/user",
+  addToWishlist: "/api/user/wishlist",
+  getWishlist: "/api/user/wishlist",
 
   //payment
-  payment: "/payment/order",
-  updatePremium: "/payment/update-premium-access",
+  payment: "/api/payment/order",
+  updatePremium: "/api/payment/update-premium-access",
 
   // streaming urls
   fetchAllStreamingVideos: `/api/video`,
@@ -63,7 +64,7 @@ export const api = axios.create({
 });
 
 export function getWatchUrl(vidId, mediaType, poster_path) {
-  console.log("mediaType", mediaType)
+  // console.log("mediaType", mediaType)
   const prefix = mediaType === "tv" ? "tv" : "movies";
   // return `${prefix}/watch?id=${vidId}&poster_path=${poster_path}`;
   return `${prefix}/watch?id=${vidId}`;

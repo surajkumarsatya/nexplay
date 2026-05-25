@@ -1,3 +1,5 @@
+'use client'
+
 import Image from "next/image";
 import Link from "next/link";
 import { X, ExternalLink, ChevronRight, Menu } from "lucide-react";
@@ -9,8 +11,26 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import { api, ENDPOINT } from "@/lib/api";
+import { useRouter } from "next/navigation";
+import { userLoggedOutDetails } from "@/redux/userSlice";
 
 export function ProfileSheet() {
+  const userData = useSelector((state) => state.user)
+  const dispatch = useDispatch();
+  const router = useRouter();
+  console.log(userData)
+  const handleLogout = async () => {
+    try {
+      await api.get(ENDPOINT.logout);
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      dispatch(userLoggedOutDetails());
+      router.push("/login");
+    }
+  };
   return (
     <Sheet>
       <SheetTrigger>
@@ -52,11 +72,13 @@ export function ProfileSheet() {
                 height={72}
                 className="absolute -top-9 rounded-full border-2 border-zinc-700 bg-zinc-800"
               />
+              <p className="my-2 text-lg font-semibold">{userData.isLoggedIn ? userData?.user?.name : "Guest"}</p>
 
-              <p className="mt-4 text-lg font-semibold">Guest</p>
-
-              <Button className="h-10 px-4 rounded-sm border-2 border-white bg-black hover:bg-white hover:text-black text-white font-semibold transition">
-                <Link href="/login">LOGIN</Link>
+              <Button
+                onClick={handleLogout}
+                className="h-10 px-4 rounded-sm border-2 border-white bg-black hover:bg-white hover:text-black text-white font-semibold transition"
+              >
+                {userData.isLoggedIn ? "LOGOUT" : <Link href="/login">LOGIN</Link>}
               </Button>
             </div>
           </div>

@@ -18,6 +18,8 @@ import { useState } from "react";
 import { api, ENDPOINT } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { LucideLoader2 } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { userLoggedInDetails } from "@/redux/userSlice";
 
 export default function SignupPage() {
 
@@ -27,6 +29,12 @@ export default function SignupPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const dispatch = useDispatch();
+    const userData = useSelector((state) => state.user)
+
+    if(userData.isLoggedIn){
+      return router.push("/")
+    }
 
     const onsubmit = async () => {
       try {
@@ -43,7 +51,7 @@ export default function SignupPage() {
           confirmPassword: confirmPassword
         })
         if (res.data.status === "success") {
-              // dispatch(userLoggedInDetails(res.data.user));
+              dispatch(userLoggedInDetails(res?.data?.user))
               router.push("/");
             } else {
                 console.log("message", res.data.message);
@@ -53,7 +61,7 @@ export default function SignupPage() {
       }
 
       } catch (error) {
-        console.log("err: ", err.response.data.message);
+        console.log("err: ", error.response.data.message);
             toast("Something went wrong");
         } finally {
             setLoading(false);

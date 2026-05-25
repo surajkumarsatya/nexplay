@@ -48,7 +48,6 @@ async function CategoriesContent({ fetcher, mediaType }) {
           <div className="gird" key={post.id}>
             <Link
               href={getWatchUrl(post.id, mediaType, post?.poster_path)}
-              
             >
               <Image
                 src={media(post?.poster_path)}

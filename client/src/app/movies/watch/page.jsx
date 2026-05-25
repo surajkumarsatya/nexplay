@@ -1,20 +1,24 @@
 // import ShareButton from "@/components/atom/ShareButton";
 // import WishlistButton from "@/components/atom/WishListButton";
+import WishlistButton from "@/components/atom/WishlistButton";
 import { buttonVariants } from "@/components/ui/button";
 import { api, ENDPOINT } from "@/lib/api";
 import { FilmIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+
 const page = async ({ searchParams }) => {
   const params = await searchParams;
   const id = params.id;
   const poster_path = params.poster_path;
-  console.log(ENDPOINT.getMovieDetails(id));
-  console.log(id);
+  // console.log(ENDPOINT.getMovieDetails(id));
+  // console.log(id);
   // const details = (await api.get(ENDPOINT.getMovieDetails(id))).data.data.results?.[0];
   const details = (await api.get(ENDPOINT.getMovieDetails(id))).data.data;
   // console.log(details);
-  console.log("poster_path", poster_path);
+  // console.log("poster_path", poster_path);
+
+  
 
   return (
     <div className="relative min-h-screen text-white">
@@ -87,9 +91,18 @@ const page = async ({ searchParams }) => {
                 ☰
               </button>
 
-              <button className="w-10 h-10 rounded-full bg-blue-950 flex items-center justify-center text-xl hover:scale-105 transition">
+              {/* <button className="w-10 h-10 rounded-full bg-blue-950 flex items-center justify-center text-xl hover:scale-105 transition"
+              onClick={addToWatchlish}>
                 ♥
-              </button>
+              </button> */}
+              <WishlistButton 
+                wishlist={{
+                id: details.id,
+                poster_path: details.poster_path,
+                name: details.title,
+                mediaType: "movie",
+              }}
+              />
 
               <button className="w-10 h-10 rounded-full bg-blue-950 flex items-center justify-center text-xl hover:scale-105 transition">
                 🔖

@@ -3,6 +3,8 @@ import "./globals.css";
 import Header from "@/components/section/Header";
 import Footer from "@/components/section/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import StoreProveder from "@/providers/StoreProvider";
+import AuthProvider from "@/providers/AuthProvider";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -19,10 +21,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={roboto.variable}>
       <body className="min-h-screen flex flex-col">
-        <Header />
-        <main className="grow bg-black/90 mt-20">{children}</main>
-        <Toaster />
-        <Footer />
+        <StoreProveder>
+          <AuthProvider>
+            <Header />
+            <main className="grow bg-black/90 mt-20">{children}</main>
+            <Toaster />
+            <Footer />
+          </AuthProvider>
+        </StoreProveder>
       </body>
     </html>
   );
