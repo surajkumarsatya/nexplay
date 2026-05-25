@@ -44,7 +44,18 @@ const userSchema = new mongoose.Schema({
   },
   otp: String,
   otpExpiry: Date,
+
+  wishlist: [
+    {
+      id: { type: Number },
+      name: { type: String },
+      poster_path: { type: String },
+      mediaType: { type: String },
+    }
+  ],
 });
+
+
 
 // ✅ HASH PASSWORD (ONLY HERE)
 userSchema.pre("save", async function () {

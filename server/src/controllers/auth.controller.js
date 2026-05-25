@@ -97,6 +97,11 @@ async function loginHandler(req, res) {
     return res.status(200).json({
       status: "success",
       message: "Login successful",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (err) {
     return res.status(500).json({
