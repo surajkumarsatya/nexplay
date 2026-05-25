@@ -91,7 +91,8 @@ async function loginHandler(req, res) {
     res.cookie("jwt", token, {
       maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
+      sameSite: "none",
     });
 
     return res.status(200).json({
@@ -252,7 +253,8 @@ const logoutController = (req, res) => {
   res.cookie("jwt", "", {
     maxAge: 0,
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
+    sameSite: "none",
   });
 
   return res.status(200).json({

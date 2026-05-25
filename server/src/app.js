@@ -15,7 +15,7 @@ import paymentRoute from "./routes/payment.route.js"
 app.use(express.json())
 app.use(cookieParser())
 const corsConfig = {
-    origin: true,
+    origin: "https://nexxplay.vercel.app/",
     credentials: true,
 };
 app.use(cors(corsConfig));
