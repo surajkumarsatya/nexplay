@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { LucideLoader2 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { userLoggedInDetails } from "@/redux/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SignupPage() {
 
