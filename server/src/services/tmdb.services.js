@@ -38,7 +38,11 @@ const TMDB_ENDPOINT = {
 const tmdbApi = {
   get: async (endpoint) => {
     const url = tmdbBASEURL + endpoint;
-    const response = await fetch(url, { method: "GET", headers: headers });
+    const response = await fetch(url, { method: "GET", headers: headers,
+       next: {
+        revalidate: 60,
+      },
+     });
 
     if (!response.ok) {
       throw new Error("TMDB API failed");
